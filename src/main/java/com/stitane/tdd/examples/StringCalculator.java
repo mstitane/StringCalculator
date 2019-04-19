@@ -1,17 +1,17 @@
 package com.stitane.tdd.examples;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StringCalculator {
 
     private static final String DEFAULT_DELIMITER = ";";
-    private static final String DELIMITER = ",|n";
+    private static final String DELIMITER = "[,n]";
     private static final String MORE_THAN_TWO_NUMBERS = "More than two numbers";
     private static final String DELIMITER_START_WITH = "//";
     private static final String DELIMITER_NEW_LINE = "n";
-    private static final String STR_DELIMITER = "[";
+    private static final String BRACKET_DELIMITER_OPENED = "[";
+    private static final String BRACKET_DELIMITER_CLOSED = "]";
 
     public static int add(String numbers) {
 
@@ -20,7 +20,7 @@ public class StringCalculator {
             int endDelimiterIndex = numbers.indexOf(DELIMITER_NEW_LINE);
             String delimiter = numbers.substring(beginDelimiterIndex, endDelimiterIndex);
             System.out.println("Delimiter : " + delimiter);
-            if (delimiter.contains(STR_DELIMITER)) {
+            if (delimiter.contains(BRACKET_DELIMITER_OPENED)) {
                 List<String> delimiters = extractDelimiters(delimiter);
                 return add(delimiters, numbers.substring(endDelimiterIndex +1));
             }
@@ -32,9 +32,9 @@ public class StringCalculator {
 
     private static List<String> extractDelimiters(String delimiter) {
         List<String> delimiters = new ArrayList<>();
-        int beginIndex = delimiter.indexOf(STR_DELIMITER);
-        int endIndex = delimiter.indexOf("]");
-        while (delimiter.contains(STR_DELIMITER)) {
+        int beginIndex = delimiter.indexOf(BRACKET_DELIMITER_OPENED);
+        int endIndex = delimiter.indexOf(BRACKET_DELIMITER_CLOSED);
+        while (delimiter.contains(BRACKET_DELIMITER_OPENED)) {
             delimiters.add(delimiter.substring(beginIndex + 1, endIndex));
             delimiter = delimiter.substring(endIndex + 1);
         }
